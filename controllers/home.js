@@ -14,15 +14,14 @@ exports.msg = function(req, res) {
 		
 	/*--- wikipedia ---*/
 	var query = "Napoleon Bonaparte";
-	var options = {query: query, format: "json", summaryOnly: true};
+	var options = {query: query, format: "html", summaryOnly: true};
 	wikipedia.searchArticle(options, function(err, htmlWikiText){
 	    if(err){
 	      console.log("An error occurred[query=%s, error=%s]", query, err);
 	      return;
 	    }
-	    // console.log("Query successful %s", htmlWikiText);
-	    res.send(JSON.parse(htmlWikiText).query.pages);
-	    // console.log(htmlWikiText);
+
+	    res.send(htmlWikiText);  
 	});
 
 	//movie times
