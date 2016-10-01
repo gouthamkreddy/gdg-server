@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
 
 /* Routes */
 app.get('/', homeController.index);
-app.get('/message', homeController.msg);
+app.post('/message', homeController.msg);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
