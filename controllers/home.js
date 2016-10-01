@@ -7,7 +7,7 @@ exports.index = function(req, res) {
 
 exports.msg = function(req, res) {
 	console.log(req.body);
-	var i = 2;
+	var i = 3;
 	// read url, phone number, type
 		
 	if (i == 1) {
@@ -50,9 +50,30 @@ exports.msg = function(req, res) {
 		    console.log("We’ve encountered an error: " + error);
 		  }
 		});
+	} else if (i==3) {
+		/*--- Train Running Status ---*/
+		var request = require("request");
+		var cheerio = require("cheerio");
+		var url = "https://www.railyatri.in/live-train-status/12005-new-delhi-kalka-shatabdi-exp-ndls-to-klk?start_date=0";
+		var str = "";
+
+		request(url, function (error, response, body) {
+		  if (!error) {
+		    var $ = cheerio.load(body);
+		    $('div.schedule > div.border_div').each(function( index ) {
+			    var station_name = $(this).find('span.station > a').text().trim();
+			    var time = $(this).find('span.arrival_span').text().trim();
+			    var departure = $(this).find('span.departure > span.green_txt').text().trim();
+			   	str = str + station_name + ":" + time + ":" + departure + "; ";
+			});
+			res.send(str);
+		  } else {
+		    console.log("We’ve encountered an error: " + error);
+		  }
+		});
 	}
 	
-	//train running status
+	
 
 	/*--- Twilio API ---*/
 	// var accountSid = 'ACb412781167345e15410b639433dd90ec';
